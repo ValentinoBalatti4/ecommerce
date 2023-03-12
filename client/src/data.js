@@ -27,16 +27,19 @@ export const sliderItems = [
       id: 1,
       img: "images/cat1.webp",
       title: "SHIRT STYLE!",
+      category: "fashion"
     },
     {
       id: 2,
       img: "images/cat2.jpeg",
       title: "LOUNGEWEAR LOVE",
+      category: ""
     },
     {
       id: 3,
       img: "images/cat3.jpeg",
       title: "LIGHT JACKETS",
+      category: ""
     },
   ];
 

@@ -76,25 +76,30 @@ const Login = () => {
   let navigate = useNavigate();
   const [login, setLogin] = useState(true)
 
-  const [name, setName] = useState("")
+  const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setCPassword] = useState("")
 
   const registerUser = async (event) => {
     event.preventDefault()
-    const response = await fetch('http://127.0.0.1:4444/api/auth/register', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      body: JSON.stringify( {
-        name,
-        password,
+
+    if(password === confirmPassword){
+      const response = await fetch('http://127.0.0.1:4444/api/auth/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify( {
+          username,
+          password,
+        })
       })
-    })
-
-    const data = response.json()
-
+  
+      const data = response.json()
+      console.log(data)
+    } else{
+      console.log("Passwords do not match")
+    }
 
   }
 
@@ -106,14 +111,13 @@ const Login = () => {
         'Content-type': 'application/json'
       }, 
       body: JSON.stringify({
-        name,
+        username,
         password
       })
     })
 
     const data = response.json()
-
-
+    console.log(data)
   }
 
   return (
@@ -126,8 +130,8 @@ const Login = () => {
           <Wrapper>
             <Title>Login</Title>
             <Form onSubmit={loginUser}>
-              <Input placeholder="username" value={name}/>
-              <Input placeholder="password" value={password}/>
+              <Input placeholder="username" value={username} onChange={e => setUsername(e.target.value)}/>
+              <Input placeholder="password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
               <Button>Login</Button>
               <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
               <Link onClick={() => setLogin(false)}>CREATE A NEW ACCOUNT</Link>
@@ -138,9 +142,9 @@ const Login = () => {
 
           <Title>Register</Title>
           <Form onSubmit={registerUser}>
-          <Input placeholder="username" />
-              <Input placeholder="password" />
-              <Input placeholder="Confirm password" />
+          <Input placeholder="username" value={username} onChange={e => setUsername(e.target.value)}/>
+              <Input placeholder="password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
+              <Input placeholder="Confirm password" type="password" value={confirmPassword} onChange={e => setCPassword(e.target.value)}/>
               <Button>Register</Button>
               <Link onClick={() => setLogin(true)}>Already have an account?</Link>
           </Form>

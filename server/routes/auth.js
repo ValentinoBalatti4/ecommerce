@@ -44,7 +44,6 @@ router.post('/login', async (req, res) => {
                 )
 
                 res.json({status:'success', token: token})
-                res.redirect('/')
             }
         }
     } catch(err){

@@ -3,7 +3,7 @@ const router = require('express').Router()
 const {verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require("./verifyToken");
 
 //Create product
-router.post('/', verifyTokenAndAdmin, async (req, res) => {
+router.post('/', async (req, res) => {
     const newProduct = new Product(req.body)
 
     try{
@@ -53,7 +53,7 @@ router.get('/', async (req, res) => {
         if(queryNew){
             products = await Product.find().sort({createdAt: -1}).limit(1)
         } else if(queryCategory){
-            products = await Product.find().sort({
+            products = await Product.find({
                 categories: {
                     $in: [queryCategory]
                 }
@@ -62,7 +62,7 @@ router.get('/', async (req, res) => {
             products = await Product.find()
         }
 
-        res.status(200).json(product)
+        res.status(200).json(products)
 
     } catch (err) {
         res.status(500).json(err)

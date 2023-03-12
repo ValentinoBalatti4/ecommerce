@@ -73,13 +73,13 @@ const Product = ({ item }) => {
   return (
     <Container>
       <Circle />
-      <Image src={require(`../${item.img}`)} />
+      <Image src={item.img} alt=""/>
       <Info>
         <Icon>
           <ShoppingCartOutlined />
         </Icon>
         <Icon>
-          <Link to={`/products/${item.id}`}>
+          <Link to={`/product/${item._id}`}>
             <SearchOutlined />
           </Link>
         </Icon>

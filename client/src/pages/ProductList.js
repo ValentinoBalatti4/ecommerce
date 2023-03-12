@@ -41,15 +41,15 @@ const Option = styled.option``;
 
 const ProductList = () => {
   const location = useLocation()
-  const cat = location.pathname.split('/')[2]
+  const cat = location.pathname.split("/")[2]
 
 
-  const [filters, setaFilter] = useState({})
+  const [filters, setFilter] = useState({})
   const [sort, setSort] = useState('newest')
 
   const handleFilters = (e) =>{
     const value = e.target.value
-    setaFilter({
+    setFilter({
       ...filters,
       [e.target.name] : value
     })

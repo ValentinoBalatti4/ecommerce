@@ -7,6 +7,7 @@ import Newsletter from "../components/Newsletter";
 import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
+import axios from "axios"
 
 const Container = styled.div``;
 
@@ -42,7 +43,7 @@ const Desc = styled.p`
 `;
 
 const Price = styled.span`
-  font-weight: 100;
+  font-weight: 500;
   font-size: 40px;
 `;
 
@@ -142,7 +143,7 @@ const Product = () => {
   useEffect(()=>{
     const getProduct = async () => {
       try{
-        const response = await fetch('http://127.0.0.1:4444/api/products/find/'+id)
+        const response = await axios.get(`http://127.0.0.1:4444/api/products/find/${id}`)
         setProduct(response.data)
       } catch(e){}
     }
@@ -171,7 +172,7 @@ const Product = () => {
           <Desc>
             {product.desc}
           </Desc>
-          <Price>$ 20</Price>
+          <Price>${product.price}</Price>
           <FilterContainer>
             <Filter>
               <FilterTitle>Color</FilterTitle>
@@ -183,7 +184,7 @@ const Product = () => {
               <FilterTitle>Size</FilterTitle>
               <FilterSize>
               {product.size?.map((s) =>(
-                <FilterSizeOption size={s} key={s}/>
+                <FilterSizeOption size={s}>{s}</FilterSizeOption>
               ))}
               </FilterSize>
             </Filter>
