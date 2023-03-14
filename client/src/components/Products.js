@@ -25,7 +25,6 @@ const Products = ({cat, filters, sort}) => {
             : "http://127.0.0.1:4444/api/products"
         )
         setProducts(response.data)
-        console.log(response.data)
       } catch(e){
         console.log(e.message)
       }

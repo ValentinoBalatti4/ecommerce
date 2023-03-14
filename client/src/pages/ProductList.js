@@ -7,6 +7,7 @@ import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
+import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Container = styled.div``;
@@ -21,6 +22,8 @@ const FilterContainer = styled.div`
 `;
 
 const Filter = styled.div`
+  display: flex;
+  align-items: center;
   margin: 20px;
   ${mobile({ width: "0px 20px", display: "flex", flexDirection: "column" })}
 `;
@@ -49,11 +52,20 @@ const ProductList = () => {
 
   const handleFilters = (e) =>{
     const value = e.target.value
-    setFilter({
-      ...filters,
-      [e.target.name] : value
-    })
+    if(value === null){
+      delete filters[e.target.name]
+    } else{
+      setFilter({
+        ...filters,
+        [e.target.name] : value.toLowerCase()
+      })
+    }
+    
+    console.log(filters)
   }
+
+
+
 
   return (
     <Container>
@@ -64,7 +76,7 @@ const ProductList = () => {
         <Filter>
           <FilterText>Filter Products:</FilterText>
           <Select name="color" onChange={handleFilters}>
-            <Option disabled>
+            <Option disabled selected>
               Color
             </Option>
             <Option>White</Option>
@@ -73,9 +85,11 @@ const ProductList = () => {
             <Option>Blue</Option>
             <Option>Yellow</Option>
             <Option>Green</Option>
+            <Option></Option>
+            
           </Select>
           <Select name="size" onChange={handleFilters}>
-            <Option disabled>
+            <Option disabled selected>
               Size
             </Option>
             <Option>XS</Option>
@@ -83,7 +97,9 @@ const ProductList = () => {
             <Option>M</Option>
             <Option>L</Option>
             <Option>XL</Option>
+            <Option></Option>
           </Select>
+          
         </Filter>
         <Filter>
           <FilterText>Sort Products:</FilterText>
@@ -92,6 +108,7 @@ const ProductList = () => {
             <Option value="asc">Price (asc)</Option>
             <Option value="desc">Price (desc)</Option>
           </Select>
+          <ClearIcon/>
         </Filter>
       </FilterContainer>
       <Products cat={cat} filters={filters} sort={sort}/>

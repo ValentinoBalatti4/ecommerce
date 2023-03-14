@@ -1,7 +1,10 @@
 import { Search, ShoppingCartOutlined } from "@mui/icons-material";
+import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { mobile } from "../responsive";
+import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Container = styled.div`
   height: 60px;
@@ -49,9 +52,11 @@ const Center = styled.div`
   text-align: center;
 `;
 
-const Logo = styled.h1`
+const Logo = styled.a`
+  color: black;
   font-size: 36px;
   font-weight: bold;
+  text-decoration: none;
   ${mobile({ fontSize: "24px" })}
 `;
 const Right = styled.div`
@@ -72,6 +77,10 @@ const MenuItem = styled.a`
 `;
 
 const Navbar = () => {
+  const cartQuantity = useSelector(state => state.cart.quantity)
+
+  
+
   return (
     <Container>
       <Wrapper>
@@ -83,15 +92,21 @@ const Navbar = () => {
           </SearchContainer>
         </Left>
         <Center>
-          <Logo>MyShop</Logo>
+          <Link to="/" style={{textDecoration: "none"}}>
+            <Logo href="/">MyShop</Logo>
+          </Link>
         </Center>
         <Right>
-          <MenuItem href="/login">Sign in</MenuItem>
-          <MenuItem href="/cart">
-
-            <ShoppingCartOutlined/>
-
-          </MenuItem>
+          <Link to="/login" style={{textDecoration: "none"}}>
+            <MenuItem>Sign in</MenuItem>
+          </Link>
+          <Link to="/cart">
+            <MenuItem>
+              <Badge badgeContent={cartQuantity}>
+                <ShoppingCartOutlined/>
+              </Badge>
+            </MenuItem>
+          </Link>
         </Right>
       </Wrapper>
     </Container>

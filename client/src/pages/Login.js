@@ -3,6 +3,8 @@ import styled from "styled-components";
 import {mobile} from "../responsive";
 import { useState } from "react";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import { useDispatch, useSelector } from "react-redux";
+import { login } from "../redux/apiCalls";
 
 const Container = styled.div`
   width: 100vw;
@@ -63,6 +65,10 @@ const Button = styled.button`
   &:hover{
     
   }
+
+  &:disabled{
+    cursor: not-allowed;
+  }
 `;
 
 const Link = styled.a`
@@ -72,81 +78,53 @@ const Link = styled.a`
   cursor: pointer;
 `;
 
+const Error = styled.span`
+  color: red;
+`
+
 const Login = () => {
   let navigate = useNavigate();
-  const [login, setLogin] = useState(true)
+  const [loginPage, setLoginPage] = useState(true)
 
   const [username, setUsername] = useState("")
   const [password, setPassword] = useState("")
   const [confirmPassword, setCPassword] = useState("")
+  const dispatch = useDispatch()
+  const { isFetching, error, message } = useSelector((state) => state.user)
 
-  const registerUser = async (event) => {
-    event.preventDefault()
-
-    if(password === confirmPassword){
-      const response = await fetch('http://127.0.0.1:4444/api/auth/register', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify( {
-          username,
-          password,
-        })
-      })
   
-      const data = response.json()
-      console.log(data)
-    } else{
-      console.log("Passwords do not match")
-    }
-
-  }
-
-  const loginUser = async (event) => {
-    event.preventDefault()
-    const response = await fetch('http://127.0.0.1:4444/api/auth/login', {
-      method: 'POST',
-      headers:{
-        'Content-type': 'application/json'
-      }, 
-      body: JSON.stringify({
-        username,
-        password
-      })
-    })
-
-    const data = response.json()
-    console.log(data)
+  const handleClick = (e) => {
+    e.preventDefault()
+    login(dispatch, { username, password })
   }
 
   return (
     <Container>
       <ArrowBackIcon style={{ position: "absolute", top: "15px", left: "15px", fontSize: "30px", cursor: "pointer" }} onClick={() => navigate(-1)}/>
       {
-        login ?
-      
-
+        loginPage ?
           <Wrapper>
             <Title>Login</Title>
-            <Form onSubmit={loginUser}>
+            <Form>
               <Input placeholder="username" value={username} onChange={e => setUsername(e.target.value)}/>
               <Input placeholder="password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
-              <Button>Login</Button>
+              <Button onClick={handleClick} disabled={isFetching}>Login</Button>
+              {error  && <Error>{message.error}</Error>}
               <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
-              <Link onClick={() => setLogin(false)}>CREATE A NEW ACCOUNT</Link>
+              <Link onClick={() => setLoginPage(false)}>CREATE A NEW ACCOUNT</Link>
             </Form>
           </Wrapper>
         :
         <Wrapper>
 
           <Title>Register</Title>
-          <Form onSubmit={registerUser}>
+          <Form>
           <Input placeholder="username" value={username} onChange={e => setUsername(e.target.value)}/>
               <Input placeholder="password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
               <Input placeholder="Confirm password" type="password" value={confirmPassword} onChange={e => setCPassword(e.target.value)}/>
               <Button>Register</Button>
-              <Link onClick={() => setLogin(true)}>Already have an account?</Link>
+              
+              <Link onClick={() => setLoginPage(true)}>Already have an account?</Link>
           </Form>
         </Wrapper>
 
