@@ -140,7 +140,7 @@ const Product = () => {
   const id = location.pathname.split('/')[2]
 
   const [product, setProduct] = useState({})
-  const [quantity, setQuantity] = useState("")
+  const [quantity, setQuantity] = useState(1)
   const [color, setColor] = useState("")
   const [size, setSize] = useState("")
   const dispatch = useDispatch()
@@ -193,7 +193,7 @@ const Product = () => {
             </Filter>
             <Filter>
               <FilterTitle>Size</FilterTitle>
-              <FilterSize onChange={e => setSize(e.target.value)}>
+              <FilterSize onChange={(e) => setSize(e.target.value)}>
                 {product.size?.map((s) =>(
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}

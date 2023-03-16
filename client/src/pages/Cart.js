@@ -1,10 +1,10 @@
-import { Add, Remove } from "@mui/icons-material";
+import { Add, Remove, DeleteOutline } from "@mui/icons-material";
 import { useSelector } from "react-redux";
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
-import { mobile } from "../responsive";
+import { mobile, tablet } from "../responsive";
 
 const Container = styled.div``;
 
@@ -47,39 +47,53 @@ const TopText = styled.span`
 const Bottom = styled.div`
   display: flex;
   justify-content: space-between;
-  ${mobile({ flexDirection: "column" })}
+  ${tablet({ flexDirection: "column" })}
 
 `;
 
 const Info = styled.div`
+  display: flex;
+  flex-direction: column;
   flex: 3;
+  gap: 10px;
 `;
 
 const Product = styled.div`
   display: flex;
   justify-content: space-between;
+  border: 1px solid gray;
+  border-radius: 10px;
+  
   ${mobile({ flexDirection: "column" })}
 `;
 
 const ProductDetail = styled.div`
   flex: 2;
   display: flex;
+  ${mobile({padding: "5px 10px"})}
+
 `;
 
 const Image = styled.img`
   width: 200px;
+  border: 1px solid lightgray;
+  ${mobile({width: "125px"})}
 `;
 
 const Details = styled.div`
   padding: 20px;
   display: flex;
+  flex-wrap: wrap;
   flex-direction: column;
   justify-content: space-around;
 `;
 
 const ProductName = styled.span``;
 
-const ProductId = styled.span``;
+const ProductId = styled.span`
+  ${tablet({fontSize: "13px"})}
+  ${mobile({fontSize: "11px"})}
+`;
 
 const ProductColor = styled.div`
   width: 20px;
@@ -119,7 +133,7 @@ const ProductPrice = styled.div`
 const Hr = styled.hr`
   background-color: #eee;
   border: none;
-  height: 1px;
+  height: 10px;
 `;
 
 const Summary = styled.div`
@@ -154,8 +168,22 @@ const Button = styled.button`
   font-weight: 600;
 `;
 
+const DeleteButton = styled(DeleteOutline)`
+  position: relative;
+  top: 25px;
+  right: 30px;
+  cursor: pointer;
+  &:hover{
+    color:red;
+  }
+`
+
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
+
+  const deleteProduct = (productId) => {
+    console.log(productId)
+  }
 
   return (
     <Container>
@@ -173,8 +201,9 @@ const Cart = () => {
         </Top>
         <Bottom>
           <Info>
-            {cart.products.map((product) =>(
-                <Product>
+            {
+              cart.products.map((product) =>(
+                <Product key={product._id}>
                   <ProductDetail>
                     <Image src={product.img} />
                     <Details>
@@ -182,9 +211,9 @@ const Cart = () => {
                         <b>Product:</b> {product.title}
                       </ProductName>
                       <ProductId>
-                        <b>ID:</b> {product.id}
+                        <b>ID:</b> {product._id}
                       </ProductId>
-                      <ProductColor color="gray" />
+                      <ProductColor color={product.color}/>
                       <ProductSize>
                         <b>Size:</b> {product.size}
                       </ProductSize>
@@ -198,10 +227,10 @@ const Cart = () => {
                     </ProductAmountContainer>
                     <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
                   </PriceDetail>
+                  <DeleteButton onClick={() => deleteProduct(product)} />
                 </Product>
               ))
             }
-            
           </Info>
           <Summary>
             <SummaryTitle>ORDER SUMMARY</SummaryTitle>

@@ -2,7 +2,7 @@ import { Search, ShoppingCartOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
-import { mobile } from "../responsive";
+import { mobile, tablet } from "../responsive";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
@@ -73,6 +73,7 @@ const MenuItem = styled.a`
   font-size: 20px;
   cursor: pointer;
   margin-left: 25px;
+  ${tablet({fontSize:"16px"})}
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
