@@ -3,8 +3,10 @@ import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
 import { mobile, tablet } from "../responsive";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { logout } from "../redux/apiCalls";
+
 
 const Container = styled.div`
   height: 60px;
@@ -79,8 +81,14 @@ const MenuItem = styled.a`
 
 const Navbar = () => {
   const cartQuantity = useSelector(state => state.cart.quantity)
+  const dispatch = useDispatch()
+  const user = useSelector(state => state.user.currentUser)
 
-  
+  const handleLogoutClick = (e) => {
+    e.preventDefault()
+    logout(dispatch)
+  }
+
 
   return (
     <Container>
@@ -98,9 +106,19 @@ const Navbar = () => {
           </Link>
         </Center>
         <Right>
-          <Link to="/login" style={{textDecoration: "none"}}>
-            <MenuItem>Sign in</MenuItem>
-          </Link>
+          {
+            user 
+            ?
+              <MenuItem onClick={handleLogoutClick}>Sign out</MenuItem>
+
+            :
+
+              <Link to="/login" style={{textDecoration: "none"}}>
+                <MenuItem>Sign in</MenuItem>
+              </Link>
+            
+          }
+
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={cartQuantity}>

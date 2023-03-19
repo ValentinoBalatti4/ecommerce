@@ -1,10 +1,12 @@
 import { Add, Remove, DeleteOutline } from "@mui/icons-material";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { removeProduct } from "../redux/cartRedux"
 import styled from "styled-components";
 import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile, tablet } from "../responsive";
+import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -14,8 +16,9 @@ const Wrapper = styled.div`
 `;
 
 const Title = styled.h1`
+  display: flex;
   font-weight: 300;
-  text-align: center;
+  justify-content: center;
 `;
 
 const Top = styled.div`
@@ -142,6 +145,7 @@ const Summary = styled.div`
   border-radius: 10px;
   padding: 20px;
   height: 50vh;
+  ${mobile({ marginTop: "20px"})}
 `;
 
 const SummaryTitle = styled.h1`
@@ -180,9 +184,12 @@ const DeleteButton = styled(DeleteOutline)`
 
 const Cart = () => {
   const cart = useSelector((state) => state.cart)
+  const dispatch = useDispatch()
 
-  const deleteProduct = (productId) => {
-    console.log(productId)
+  const deleteProduct = (product) => {
+    dispatch(
+      removeProduct(product)
+    )
   }
 
   return (
@@ -202,33 +209,37 @@ const Cart = () => {
         <Bottom>
           <Info>
             {
-              cart.products.map((product) =>(
-                <Product key={product._id}>
-                  <ProductDetail>
-                    <Image src={product.img} />
-                    <Details>
-                      <ProductName>
-                        <b>Product:</b> {product.title}
-                      </ProductName>
-                      <ProductId>
-                        <b>ID:</b> {product._id}
-                      </ProductId>
-                      <ProductColor color={product.color}/>
-                      <ProductSize>
-                        <b>Size:</b> {product.size}
-                      </ProductSize>
-                    </Details>
-                  </ProductDetail>
-                  <PriceDetail>
-                    <ProductAmountContainer>
-                      <Add />
-                      <ProductAmount>{product.quantity}</ProductAmount>
-                      <Remove />
-                    </ProductAmountContainer>
-                    <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
-                  </PriceDetail>
-                  <DeleteButton onClick={() => deleteProduct(product)} />
-                </Product>
+              cart.products.length === 0 
+              ? 
+                <Title style={{alignItems: "center", flex: "0.8"}}>Your cart is empty</Title> 
+              :
+                cart.products.map((product) =>(
+                  <Product key={product._id}>
+                    <ProductDetail>
+                      <Image src={product.img} />
+                      <Details>
+                        <ProductName>
+                          <b>Product:</b> {product.title}
+                        </ProductName>
+                        <ProductId>
+                          <b>ID:</b> {product._id}
+                        </ProductId>
+                        <ProductColor color={product.color}/>
+                        <ProductSize>
+                          <b>Size:</b> {product.size}
+                        </ProductSize>
+                      </Details>
+                    </ProductDetail>
+                    <PriceDetail>
+                      <ProductAmountContainer>
+                        <Remove/>
+                        <ProductAmount>{product.quantity}</ProductAmount>
+                        <Add/>
+                      </ProductAmountContainer>
+                      <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
+                    </PriceDetail>
+                    <DeleteButton onClick={() => deleteProduct(product)} />
+                  </Product>
               ))
             }
           </Info>

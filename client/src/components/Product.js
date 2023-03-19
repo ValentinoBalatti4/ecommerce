@@ -5,7 +5,7 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { Link } from 'react-router-dom'
-import { color } from "@mui/system";
+
 
 const Info = styled.div`
   opacity: 0;

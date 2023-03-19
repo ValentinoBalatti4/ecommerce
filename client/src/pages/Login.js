@@ -4,7 +4,7 @@ import {mobile} from "../responsive";
 import { useState } from "react";
 import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { useDispatch, useSelector } from "react-redux";
-import { login } from "../redux/apiCalls";
+import { login, register } from "../redux/apiCalls";
 
 const Container = styled.div`
   width: 100vw;
@@ -93,9 +93,18 @@ const Login = () => {
   const { isFetching, error, message } = useSelector((state) => state.user)
 
   
-  const handleClick = (e) => {
+  const handleLoginClick = (e) => {
     e.preventDefault()
     login(dispatch, { username, password })
+  }
+
+  const handleRegisterClick = (e) => {
+    e.preventDefault()
+    if(password !== confirmPassword){
+      alert("Passwords do not match!")
+    }else{
+      register(dispatch, { username, password })
+    }
   }
 
   return (
@@ -108,13 +117,13 @@ const Login = () => {
             <Form>
               <Input placeholder="username" value={username} onChange={e => setUsername(e.target.value)}/>
               <Input placeholder="password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
-              <Button onClick={handleClick} disabled={isFetching}>Login</Button>
-              {error  && <Error>{message.error}</Error>}
+              <Button onClick={handleLoginClick} disabled={isFetching}>Login</Button>
+              {error  && <Error>{message.message}</Error>}
               <Link>DO NOT YOU REMEMBER THE PASSWORD?</Link>
               <Link onClick={() => setLoginPage(false)}>CREATE A NEW ACCOUNT</Link>
             </Form>
           </Wrapper>
-        :
+        : 
         <Wrapper>
 
           <Title>Register</Title>
@@ -122,7 +131,7 @@ const Login = () => {
           <Input placeholder="username" value={username} onChange={e => setUsername(e.target.value)}/>
               <Input placeholder="password" type="password" value={password} onChange={e => setPassword(e.target.value)}/>
               <Input placeholder="Confirm password" type="password" value={confirmPassword} onChange={e => setCPassword(e.target.value)}/>
-              <Button>Register</Button>
+              <Button onClick={handleRegisterClick}>Register</Button>
               
               <Link onClick={() => setLoginPage(true)}>Already have an account?</Link>
           </Form>
