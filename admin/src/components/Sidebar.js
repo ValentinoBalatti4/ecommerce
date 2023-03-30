@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link as href } from "react-router-dom"
 import styled from "styled-components"
 import { TrendingUp, Home, Timeline,
      People, ShoppingBasketOutlined, AttachMoneyOutlined,
@@ -39,6 +40,10 @@ const ListItem = styled.li`
     }
 `
 
+const Link = styled(href)`
+    text-decoration: none;
+    color: #555;
+`
 
 const Sidebar = () => {
     return(
@@ -47,10 +52,12 @@ const Sidebar = () => {
                 <Menu>
                     <Title>Dashboard</Title>
                     <List>
-                        <ListItem>
-                            <Home/>
-                            Home
-                        </ListItem>
+                        <Link to="/">
+                            <ListItem>
+                                <Home/>
+                                Home
+                            </ListItem>
+                        </Link>
                         <ListItem>
                             <Timeline/>
                             Analytics
@@ -64,14 +71,18 @@ const Sidebar = () => {
                 <Menu>
                     <Title>Quick menu</Title>
                     <List>
-                        <ListItem>
-                            <People/>
-                            Users
-                        </ListItem>
-                        <ListItem>
-                            <ShoppingBasketOutlined/>
-                            Products
-                        </ListItem>
+                        <Link to="/users">                        
+                            <ListItem>
+                                <People/>
+                                Users
+                            </ListItem>
+                        </Link>
+                        <Link to="/products">
+                            <ListItem>
+                                <ShoppingBasketOutlined/>
+                                Products
+                            </ListItem>
+                        </Link>
                         <ListItem>
                             <AttachMoneyOutlined/>
                             Transactions

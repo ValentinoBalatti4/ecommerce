@@ -175,7 +175,7 @@ const User = () => {
         <Container>
             <Header>
                 <Title>Edit user</Title>
-                <Link to="/newUser">
+                <Link to="/newuser">
                     <EditBtn>Create</EditBtn>
                 </Link>
             </Header>

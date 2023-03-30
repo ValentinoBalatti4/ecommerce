@@ -1,6 +1,7 @@
 import React from "react"
 import styled from "styled-components"
 
+
 const Container = styled.div`   
     padding: 20px;
     flex: 4;
@@ -12,9 +13,20 @@ const Title = styled.h1`
 
 const NewUserForm = styled.form`
     display: flex;
-    flex-wrap: wrap;
+
+    padding: 20px;
     margin-top: 20px;
+    border-radius: 10px;
+    box-shadow: 2px 3px 8px 2px rgba(0, 0, 0, 0.25);
 `
+
+const FormLeft = styled.div`
+    display: flex;
+    flex-wrap: wrap;
+`
+
+const FormRight = styled.div``
+
 
 const NewUserFormItem = styled.div`
     width: 400px;
@@ -78,39 +90,44 @@ const NewUser = () => {
         <Container>
             <Title>New user</Title>
             <NewUserForm>
-                <NewUserFormItem>
-                    <Label>Username</Label>
-                    <Input type="text" placeholder=""/>
-                </NewUserFormItem>
-                <NewUserFormItem>
-                    <Label>Full name</Label>
-                    <Input type="text" placeholder=""/>
-                </NewUserFormItem>
-                <NewUserFormItem>
-                    <Label>Email</Label>
-                    <Input type="email" placeholder=""/>
-                </NewUserFormItem>
-                <NewUserFormItem>
-                    <Label>Password</Label>
-                    <Input type="password" placeholder=""/>
-                </NewUserFormItem>
-                <NewUserFormItem>
-                    <Label>Phone</Label>
-                    <Input type="text" placeholder=""/>
-                </NewUserFormItem>
-                <NewUserFormItem>
-                    <Label>Address</Label>
-                    <Input type="text" placeholder=""/>
-                </NewUserFormItem>
-                <NewUserFormItem>
-                    <Label>Active</Label>
-                    <Select>
-                        <Option value="yes">Yes</Option>
-                        <Option value="no">No</Option>
-                    </Select>
-                </NewUserFormItem>
-                
-                <CreateBtn>Create</CreateBtn>
+                <FormLeft>
+                    <NewUserFormItem>
+                        <Label>Username</Label>
+                        <Input type="text" placeholder=""/>
+                    </NewUserFormItem>
+                    <NewUserFormItem>
+                        <Label>Full name</Label>
+                        <Input type="text" placeholder=""/>
+                    </NewUserFormItem>
+                    <NewUserFormItem>
+                        <Label>Email</Label>
+                        <Input type="email" placeholder=""/>
+                    </NewUserFormItem>
+                    <NewUserFormItem>
+                        <Label>Password</Label>
+                        <Input type="password" placeholder=""/>
+                    </NewUserFormItem>
+                    <NewUserFormItem>
+                        <Label>Phone</Label>
+                        <Input type="text" placeholder=""/>
+                    </NewUserFormItem>
+                    <NewUserFormItem>
+                        <Label>Address</Label>
+                        <Input type="text" placeholder=""/>
+                    </NewUserFormItem>
+                    <NewUserFormItem>
+                        <Label>Active</Label>
+                        <Select>
+                            <Option value="yes">Yes</Option>
+                            <Option value="no">No</Option>
+                        </Select>
+                    </NewUserFormItem>
+                    <CreateBtn>Create</CreateBtn>
+                </FormLeft>
+                <FormRight>
+                    <Label>Profile Picture</Label>
+                    <Input type="file"/>
+                </FormRight>
             </NewUserForm>  
         </Container>
     )

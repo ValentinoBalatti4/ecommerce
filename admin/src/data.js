@@ -49,12 +49,27 @@ export const data = [
     },
 ];
 
+export const productData = [
+  {
+      name: 'Jan',
+      "sales": 4000,
+  },
+  {
+      name: 'Feb',
+      "sales": 3000,
+  },
+  {
+      name: 'Mar',
+      "sales": 2000,
+  },
+];
+
 
 export const userRows = [
     {
       id: 1,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -63,7 +78,7 @@ export const userRows = [
     {
       id: 2,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -72,7 +87,7 @@ export const userRows = [
     {
       id: 3,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -81,7 +96,7 @@ export const userRows = [
     {
       id: 4,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -90,7 +105,7 @@ export const userRows = [
     {
       id: 5,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -99,7 +114,7 @@ export const userRows = [
     {
       id: 6,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -108,7 +123,7 @@ export const userRows = [
     {
       id: 7,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -117,7 +132,7 @@ export const userRows = [
     {
       id: 8,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -126,7 +141,7 @@ export const userRows = [
     {
       id: 9,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
@@ -135,10 +150,104 @@ export const userRows = [
     {
       id: 10,
       username: "Jon Snow",
-      avatar:
+      profPic:
         "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
       email: "jon@gmail.com",
       status: "active",
       transaction: "$120.00",
     },
+];
+
+
+export const productRows = [
+  {
+    id: 1,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 2,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 3,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 4,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 5,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 6,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 7,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 8,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 9,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
+  {
+    id: 10,
+    name: "Jon Snow",
+    img:
+      "https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500",
+    stock: "jon@gmail.com",
+    status: "active",
+    price: "$120.00",
+  },
 ];
