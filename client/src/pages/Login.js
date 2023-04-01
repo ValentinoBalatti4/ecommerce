@@ -136,13 +136,7 @@ const Login = () => {
               <Link onClick={() => setLoginPage(true)}>Already have an account?</Link>
           </Form>
         </Wrapper>
-
-
-
-
       }
-
-
     </Container>
   );
 };
