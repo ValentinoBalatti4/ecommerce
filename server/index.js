@@ -19,7 +19,6 @@ app.use(express.json())
 
 
 // MongoDb setUp
-
 mongo.connect(process.env.MONGO_KEY)
 .then(()=>{
     console.log("[+] Database connected!")

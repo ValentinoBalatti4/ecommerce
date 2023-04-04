@@ -1,5 +1,5 @@
 import Sidebar from "./components/Sidebar";
-import React from "react";
+import React, { Fragment } from "react";
 import Topbar from "./components/Topbar"
 import Home from "./pages/Home"
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom"
@@ -11,38 +11,48 @@ import Product from "./pages/Product";
 import NewProduct from "./pages/NewProduct";
 import Login from "./pages/Login";
 import { useSelector } from "react-redux";
+import styled from "styled-components";
 
-
+const Container = styled.div`
+  display: flex;
+  margin-top: 10px;
+`
 
 function App() {
 
-  let admin = false;
+  let admin = false
   try {
-    admin = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user)
-      .currentUser.isAdmin;
-  }catch {}
+    admin = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.isAdmin;
+  } catch { }
 
   return (
     <Router>
       <Routes>
-        <Route path="/login" element={<Login />} />
-        {admin && (
-          <>
-            <Topbar />
-            <div>
-              <Sidebar />
-              <Route exact path="/" element={<Home />} />
-              <Route exact path="/users" element={<UserList />} />
-              <Route exact path="/user/:userId" element={<User />} />
-              <Route exact path="/newUser" element={<NewUser />} />
-              <Route exact path="/products" element={<ProductList />} />
-              <Route exact path="/product/:productId" element={<Product />} />
-              <Route exact path="/newproduct" element={<NewProduct />} />
-            </div>
-          </>
-        )}
+        <Route exact path="/login" element={<Login />} />
         {!admin && <Route path="*" element={<Navigate to="/login" />} />}
       </Routes>
+
+      {admin && (
+        <>
+          <Topbar />
+          <Container>
+            <Sidebar />
+            <Routes>
+              <>
+                <Route exact path="/" element={<Home />} />
+                <Route exact path="/users" element={<UserList />} />
+                <Route exact path="/user/:userId" element={<User />} />
+                <Route exact path="/newUser" element={<NewUser />} />
+                <Route exact path="/products" element={<ProductList />} />
+                <Route exact path="/product/:productId" element={<Product />} />
+                <Route exact path="/newproduct" element={<NewProduct />} />
+                <Route exact path="/login" element={<Navigate to="/"/>}/>
+              </>
+            </Routes>
+          </Container>
+        </>
+      )}
+
     </Router>
   );
 }

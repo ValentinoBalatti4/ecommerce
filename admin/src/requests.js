@@ -1,15 +1,19 @@
 import axios from 'axios'
 
+const BASE_URL = 'http://localhost:4444/api/'
+let TOKEN = ""
 try{
-    const TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.token
-} catch{
-    
-}
+    TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.token
+} catch{}
 
-
+console.log(TOKEN)
+export const userRequest = axios.create({
+    baseURL: BASE_URL,
+    headers: { token: `bearer ${TOKEN}` }
+})
 
 export const api = axios.create({
-    baseURL: 'http://localhost:4444/api',
+    baseURL: BASE_URL,
     headers: {
         'Access-Control-Allow-Origin': '*',
         'Content-Type': 'application/json',

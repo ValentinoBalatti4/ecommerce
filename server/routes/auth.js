@@ -43,8 +43,12 @@ router.post('/login', async (req, res) => {
                 res.json({status: 'error', message: 'Invalid password'})
             } else{
                 const token = jwt.sign(
-                    {username: user.username},
-                    process.env.JWT_KEY
+                    {
+                        id: user._id,
+                        isAdmin: user.isAdmin,
+                    },
+                    process.env.JWT_KEY,
+                    {expiresIn: "3d"}
                 )
                 
                 const { password, ...others } = user._doc

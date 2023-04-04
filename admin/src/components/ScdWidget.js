@@ -1,5 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
+import { userRequest } from "../requests"
+import {format} from "timeago.js"
 
 const Container = styled.div`
     flex: 2;
@@ -67,6 +69,21 @@ const Button = styled.button`
 `
 
 const ScdWidget = () => {
+    const [orders, setOrders] = useState([])
+
+    useEffect(() => {
+        const getOrders = async () => {
+            try{
+                const res = await userRequest.get('orders')
+                setOrders(res.data)
+            } catch(e){
+                console.log(e.message)
+            }
+        }
+        getOrders()
+    },[])
+
+
     return(
         <Container>
             <Title>Latest Transactions</Title>
@@ -77,33 +94,16 @@ const ScdWidget = () => {
                     <Th>Amount</Th>
                     <Th>Status</Th>
                 </Tr>
-                <Tr>
-                    <Td>
-                        <Image src="https://picsum.photos/200/300"/>
-                        <UserName>Jane Doe</UserName>
-                    </Td>
-                    <Date>03 March, 2022</Date>
-                    <Amount>$120.22</Amount>
-                    <Status><Button type="Approved">Approved</Button></Status>
-                </Tr>
-                <Tr>
-                    <Td>
-                        <Image src="https://picsum.photos/200/300"/>
-                        <UserName>Jane Doe</UserName>
-                    </Td>
-                    <Date>03 March, 2022</Date>
-                    <Amount>$120.22</Amount>
-                    <Status><Button type="Pending">Pending</Button></Status>
-                </Tr>
-                <Tr>
-                    <Td>
-                        <Image src="https://picsum.photos/200/300"/>
-                        <UserName>Jane Doe</UserName>
-                    </Td>
-                    <Date>03 March, 2022</Date>
-                    <Amount>$120.22</Amount>
-                    <Status><Button type="Declined">Declined</Button></Status>
-                </Tr>
+                {orders.map((order) => (
+                    <Tr key={order._id}>
+                        <Td>
+                            <UserName>{order.userId}</UserName>
+                        </Td>
+                        <Date>{format(order.createdAt)}</Date>
+                        <Amount>{order.amount}</Amount>
+                        <Status><Button type={order.status}>{order.status}</Button></Status>
+                    </Tr>
+                ))}
             </Table>
         </Container>
     )

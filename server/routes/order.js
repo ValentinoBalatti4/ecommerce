@@ -2,6 +2,16 @@ const Order = require('../models/Order');
 const router = require('express').Router()
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('./verifyToken')
 
+//Get all
+router.get("/", verifyTokenAndAdmin, async (req, res) => {
+    try {
+      const orders = await Order.find();
+      res.status(200).json(orders);
+    } catch (err) {
+      res.status(500).json(err);
+    }
+});
+
 //Create
 router.post('/', verifyToken, async (req, res) => {
     const newOrder = new Order(req.body)

@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { ArrowDownwardOutlined, ArrowUpwardOutlined } from "@material-ui/icons"
+import { userRequest } from "../requests"
 
 const Container = styled.div`
     width: 100%;
@@ -54,6 +55,24 @@ const ArrowDown = styled(ArrowDownwardOutlined)`
 `
 
 const FeaturedInfo = () => {
+    const [income, setIncome] = useState([])
+    const [percentage, setPercentage] = useState(0)
+
+    useEffect(() => {
+        const getIncome = async () => {
+            try{
+                const res = await userRequest.get('orders/income')
+                setIncome(res.data)
+                console.log(res.data)
+                setPercentage((res.data[1].total*100) / res.data[0].total - 100)
+            } catch (e){
+                console.log(e)
+            }
+        }
+        getIncome()
+        
+    }, [])
+    console.log(percentage  )
     return(
         <Container>
             <FeaturedItem>

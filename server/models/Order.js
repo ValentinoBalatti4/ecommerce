@@ -12,7 +12,7 @@ const orderSchema = mongo.Schema(
         amount: { type: Number, require: true },
         address: { type: Object, required: true},
         status: { type: String, default: "pending"}
-    }, { timestamps: true}
+    }, { timestamps: true }
 )
 
 

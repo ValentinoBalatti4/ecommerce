@@ -1,6 +1,7 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { Visibility } from "@material-ui/icons"
+import { userRequest } from "../requests"
 
 const Container = styled.div`
     flex: 1;
@@ -42,10 +43,6 @@ const UserName = styled.span`
     font-weight: 600;
 `
 
-const UserTitle = styled.span`
-    font-weight: 200;
-`
-
 const Button = styled.button`
     background-color: #eeeef7;
     color: ;
@@ -59,18 +56,34 @@ const Button = styled.button`
 
 
 const FstWidget = () => {
+    const [users, setUsers] = useState([])
+
+    useEffect(() => {
+        const getUsers = async () => {
+            try{
+                const res = await userRequest.get("user/?new=true") 
+                setUsers(res.data)
+            } catch(e){
+                console.log("Error!!!: " + e.message)
+            }
+        }
+        getUsers()
+    }, [])
+
+
     return(
         <Container>
             <Title>New Joined Members</Title>
             <List>
-                <ListItem>
-                    <Image src="https://picsum.photos/200/300" alt="profPic"/>
-                    <UserInfo>
-                        <UserName>Jhon Doe</UserName>
-                        <UserTitle>Software Engeniering</UserTitle>
-                    </UserInfo>
-                    <Button><Visibility/></Button>
-                </ListItem>
+                {users.map((user) => (
+                    <ListItem key={user._id}>
+                        <Image src={user.img || "https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png"} alt="profPic"/>
+                        <UserInfo>
+                            <UserName>{user.username}</UserName>
+                        </UserInfo>
+                        <Button><Visibility/></Button>
+                    </ListItem>
+                ))}
             </List>
         </Container>
     )   
