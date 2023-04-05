@@ -18,10 +18,11 @@ const Products = ({cat, filters, sort}) => {
   useEffect(() => {
     const getProducts = async () => {
       try{
+        const BASE_URL = 'https://ecommerce-eight-dusky.vercel.app/api'
         const response = await axios.get(
           cat 
-            ? `http://127.0.0.1:4444/api/products?category=${cat}`
-            : "http://127.0.0.1:4444/api/products",
+            ? `${BASE_URL}/products/?category=${cat}`
+            : `${BASE_URL}/products`,
         )
         setProducts(response.data)
       } catch(e){
@@ -61,10 +62,12 @@ const Products = ({cat, filters, sort}) => {
   return (
     <Container>
       { cat 
-          ? filteredProducts.map((item) => <Product item={item} key={item.id} />)
+          ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
           : products
+          // Always display different random products (8)
+            .sort(() => 0.5 - Math.random())
             .slice(0, 8)
-            .map((item) => <Product item={item} key={item.id} />)
+            .map((item) => <Product item={item} key={item._id} />)
       } 
     </Container>
   );

@@ -69,10 +69,22 @@ router.get('/', async (req, res) => {
     }
 })
 
-//Find a product
+//Find a product by ID
 router.get('/find/:id', async (req, res) => {
     try {
         const product = await Product.findById(req.params.id);
+        res.status(200).json(product);
+    } catch (err) {
+        res.status(500).json(err);
+    }   
+})
+
+router.get('/find', async (req, res) => {
+    const searchQuery = req.query.search
+    try {
+        // case-insensitive reg-exp
+        const regex = new RegExp(searchQuery, 'i')
+        const product = await Product.find({title: regex});
         res.status(200).json(product);
     } catch (err) {
         res.status(500).json(err);

@@ -6,12 +6,20 @@ import { mobile, tablet } from "../responsive";
 import { useSelector, useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
 import { logout } from "../redux/apiCalls";
+import { useState } from "react";
+import { useEffect } from "react";
+import { userRequest } from "../requests";
 
 
 const Container = styled.div`
+  position: fixed;
+  background-color: whitesmoke;
+  top: 0;
+  width: 100%;
   height: 60px;
   box-shadow: 0px 5px 5px grey;
   ${mobile({ height: "50px" })}
+  z-index:1000;
 `;
 
 const Wrapper = styled.div`
@@ -84,11 +92,25 @@ const Navbar = () => {
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.currentUser)
 
+  const [query, setQuery] = useState("")
+  const [searchResult, setSearchResult] = useState([])
+
+  useEffect(() => {
+    const getProduct = async () => {
+      if(query){
+        try{
+          const res = await userRequest.get(`products/find?search=${query}`)
+          setSearchResult(res.data)
+        } catch(e){console.log(e)}
+      }
+    }
+    getProduct() 
+  }, [query])
+
   const handleLogoutClick = (e) => {
     e.preventDefault()
     logout(dispatch)
   }
-
 
   return (
     <Container>
@@ -96,7 +118,7 @@ const Navbar = () => {
         <Left>
           <Language>EN</Language>
           <SearchContainer>
-            <Input placeholder="Search" />
+            <Input placeholder="Search" value={query} onChange={e => setQuery(e.target.value)}/>
             <Search style={{ color: "gray", fontSize: 16 }} />
           </SearchContainer>
         </Left>

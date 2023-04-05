@@ -48,7 +48,10 @@ const Circle = styled.div`
 `;
 
 const Image = styled.img`
+  max-width: 100%;
+  max-height: 100%;
   height: 75%;
+  object-fit: contain;
   z-index: 2;
 `;
 

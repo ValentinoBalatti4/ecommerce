@@ -9,7 +9,7 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
-import axios from "axios"
+import { api } from "../requests";
 
 const Container = styled.div``;
 
@@ -24,9 +24,10 @@ const ImgContainer = styled.div`
 `;
 
 const Image = styled.img`
+  
   width: 100%;
   height: 90vh;
-  object-fit: cover;
+  object-fit: contain;
   ${mobile({ height: "40vh" })}
 `;
 
@@ -149,7 +150,7 @@ const Product = () => {
   useEffect(()=>{
     const getProduct = async () => {
       try{
-        const response = await axios.get(`http://127.0.0.1:4444/api/products/find/${id}`)
+        const response = await api.get(`products/find/${id}`)
         setProduct(response.data)
       } catch(e){}
     }

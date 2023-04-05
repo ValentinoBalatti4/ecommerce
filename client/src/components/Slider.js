@@ -44,10 +44,14 @@ const Slide = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
-  background: #${(props) => props.bg};
+  background: ${(props) => props.bg};
+  color: ${(props) => props.color};
+  text-shadow: 2px 2px 4px black; 
 `;
 
 const ImgContainer = styled.div`
+  display: flex;
+  align-items: center;
   height: 100%;
   flex: 1;
 `;
@@ -72,12 +76,6 @@ const Desc = styled.p`
   letter-spacing: 3px;
 `;
 
-const Button = styled.button`
-  padding: 10px;
-  font-size: 20px;
-  background-color: transparent;
-  cursor: pointer;
-`;
 
 const Slider = () => {
   const [slideIndex, setSlideIndex] = useState(0);
@@ -96,14 +94,13 @@ const Slider = () => {
       </Arrow>
       <Wrapper slideIndex={slideIndex}>
         {sliderItems.map((item) => (
-          <Slide bg={item.bg} key={item.id}>
+          <Slide bg={item.bg} key={item.id} color={item.color}>
             <ImgContainer>
-              <Image src="https://i.ibb.co/n3qjLv1/pngwing-com.png"/>
+              <Image src={item.img}/>
             </ImgContainer>
             <InfoContainer>
               <Title>{item.title}</Title>
               <Desc>{item.desc}</Desc>
-              <Button>SHOW NOW</Button>
             </InfoContainer>
           </Slide>
         ))}

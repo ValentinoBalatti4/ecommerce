@@ -2,7 +2,7 @@ const User = require('../models/User');
 const router = require('express').Router()
 const { verifyToken, verifyTokenAndAuthorization, verifyTokenAndAdmin } = require('./verifyToken')
 
-//Get user
+//Get user by ID
 router.get('/find/:id', async (req, res) => {
   try {
       const user = await User.findById(req.params.id);
@@ -12,6 +12,7 @@ router.get('/find/:id', async (req, res) => {
       res.status(500).json(err);
     }
 })
+
 
 //Delete user
 router.delete('/:id', async (req, res)=>{
