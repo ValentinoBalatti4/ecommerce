@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
 import { DataGrid } from "@material-ui/data-grid"
 import { DeleteOutline } from "@material-ui/icons"
 import { userRows } from "../data"
 import {Link} from "react-router-dom"
-
+import { userRequest } from "../requests"
   
 
 const Container = styled.div`
@@ -40,6 +40,19 @@ const DeleteBtn = styled(DeleteOutline)`
 
 const UserList = () => {
     const [data, setData] = useState(userRows)
+    const [users, setUsers] = useState([])
+    
+
+    useEffect(() => {
+        const getUsers = async () =>{
+            try{
+                const res = await userRequest.get('user/')
+                setUsers(res.data)
+            } catch(e){console.log(e)}
+        }
+        getUsers()
+    }, [])
+
 
     const handleDelete = (id) => {
         setData(data.filter(
@@ -48,7 +61,7 @@ const UserList = () => {
     }
 
     const columns = [
-        { field: 'id', headerName: 'ID', width: 110 },
+        { field: '_id', headerName: 'ID', width: 110 },
         {
           field: 'username',
           headerName: 'Username',
@@ -56,7 +69,7 @@ const UserList = () => {
           renderCell: (params) => {
             return(
                 <User>
-                    <Image src={params.row.profPic} alt=""/>
+                    <Image src={params.row.profPic || "https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png"} alt=""/>
                     {params.row.username}
                 </User>
             )
@@ -84,10 +97,10 @@ const UserList = () => {
             renderCell: (params) => {
                 return(
                     <>
-                        <Link to={"/user/" + params.row.id}>
+                        <Link to={"/user/" + params.row._id}>
                             <EditBtn>Edit</EditBtn>
                         </Link>
-                        <DeleteBtn onClick={() => handleDelete(params.row.id)}/>
+                        <DeleteBtn onClick={() => handleDelete(params.row._id)}/>
                     </>
                 )
             }
@@ -98,7 +111,7 @@ const UserList = () => {
 
     return(
         <Container>
-            <DataGrid rows={data} columns={columns} pageSize={8} disableSelectionOnClick checkboxSelection/>
+            <DataGrid rows={users} getRowId={row => row._id} columns={columns} pageSize={8} disableSelectionOnClick checkboxSelection/>
         </Container>
     )
 }

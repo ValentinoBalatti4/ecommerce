@@ -6,10 +6,10 @@ try{
     TOKEN = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.token
 } catch{}
 
-console.log(TOKEN)
+
 export const userRequest = axios.create({
     baseURL: BASE_URL,
-    headers: { token: `bearer ${TOKEN}` }
+    headers: { token: `Bearer ${TOKEN}` }
 })
 
 export const api = axios.create({

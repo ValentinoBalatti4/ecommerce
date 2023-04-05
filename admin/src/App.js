@@ -19,11 +19,16 @@ const Container = styled.div`
 `
 
 function App() {
-
-  let admin = false
-  try {
-    admin = JSON.parse(JSON.parse(localStorage.getItem("persist:root")).user).currentUser.isAdmin;
-  } catch { }
+  
+  const admin = useSelector(state => {
+    if(state.user.currentUser !== null){
+      if(state.user.currentUser.isAdmin === true){
+        return true
+      }
+    }
+    return false
+  })
+  
 
   return (
     <Router>

@@ -1,11 +1,13 @@
 import { Publish } from '@material-ui/icons'
-import React from 'react'
-import { Link } from 'react-router-dom'
+import React, { useState, useMemo, useEffect } from 'react'
+import { Link, useLocation } from 'react-router-dom'
 import styled from 'styled-components'
 import Chart from '../components/Chart'
-import { productData } from '../data'
+import { useSelector } from 'react-redux'
+import { userRequest } from '../requests'
 
 const Container = styled.div`
+
     flex: 4;
     padding: 20px;
 `
@@ -60,7 +62,7 @@ const InfoBottom = styled.div`
 
 
 const ProductInfo = styled.div`
-    width: 150px;
+    width: auto;
     display: flex;
     justify-content: space-between;
 `
@@ -75,7 +77,7 @@ const ProductName = styled.span`
     font-weight: 600;
 `
 const ProductKey = styled.span`
-    font-size: 16px;
+    font-size: 18px;
 `
 
 const ProductValue = styled.span`
@@ -152,6 +154,54 @@ const UploadBtn = styled.button`
 `
 
 const Product = () => {
+    const location = useLocation()
+    const productId = location.pathname.split('/')[2]
+    const [productStats, setProductStats] = useState([])
+
+    const product = useSelector(state => state.product.products.find(product => product._id === productId))
+
+    const MONTHS = useMemo(
+        () => [
+            "Jan",
+            "Feb",
+            "Mar",
+            "Apr",
+            "May",
+            "Jun",
+            "Jul",
+            "Agu",
+            "Sep",
+            "Oct",
+            "Nov",
+            "Dec",
+        ],
+        []
+    )
+
+    
+    useEffect(() => {
+        const getProductStats = async () => {
+            try{
+                const res = await userRequest.get(`orders/income?pid=${productId}`)
+                console.log(res)
+                const list = res.data.sort((a, b) => {
+                    return (a._id - b._id)
+                })  
+
+                list.map(item => {
+                    setProductStats(prev => [
+                        ...prev,
+                        {name: MONTHS[item._id - 1], "Sales": item.total}    
+                    ])
+                    
+                })
+            } catch(e) {console.log(e)}
+        }
+        getProductStats()
+
+    }, [MONTHS, productId])
+
+
   return (
     <Container>
         <Header>
@@ -162,29 +212,25 @@ const Product = () => {
         </Header>
         <Top>
             <TopLeft>
-                <Chart data={productData} dataKey="sales" title="Sales performance"/>
+                <Chart data={productStats} dataKey="sales" title="Sales performance"/>
             </TopLeft>
             <TopRight>
                 <InfoTop>
-                    <Image src='https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'/>
-                    <ProductName>Apple airpods</ProductName>
+                    <Image src={product.img}/>
+                    <ProductName>{product.title}</ProductName>
                 </InfoTop>
                 <InfoBottom>
                     <ProductInfo>
                         <ProductKey>id: </ProductKey>
-                        <ProductValue>123</ProductValue>
+                        <ProductValue>{product._id}</ProductValue>
                     </ProductInfo>
                     <ProductInfo>
                         <ProductKey>sales: </ProductKey>
                         <ProductValue>12</ProductValue>
                     </ProductInfo>
                     <ProductInfo>
-                        <ProductKey>active: </ProductKey>
-                        <ProductValue>yes</ProductValue>
-                    </ProductInfo>
-                    <ProductInfo>
                         <ProductKey>inStock: </ProductKey>
-                        <ProductValue>no</ProductValue>
+                        <ProductValue>{product.inStock}</ProductValue>
                     </ProductInfo>
                     
                 </InfoBottom>
@@ -194,21 +240,25 @@ const Product = () => {
             <ProductForm>
                 <ProductFormLeft>
                     <Label>Product name</Label>
-                    <Input type="text" placeholder="Apple airpods"/>
+                    <Input type="text" placeholder={product.title}/>
+                    <Label>Product description</Label>
+                    <Input type="text" placeholder={product.description}/>
                     <Label>In Stock</Label>
-                    <Select name="inStock" id="idStock">
+                    <Input type="text" placeholder={"$" + product.price}/>
+                    <Label>In Stock</Label>
+                    <Select name="inStock" id="inStock">
                         <Option value="yes">Yes</Option>
                         <Option value="no">No</Option>
                     </Select>
                     <Label>Active</Label>
                     <Select name="active" id="active">
-                        <option value="yes">Yes</option>
-                        <option value="no">No</option>
+                        <option value="true">Yes</option>
+                        <option value="false">No</option>
                     </Select>
                 </ProductFormLeft>
                 <ProductFormRight>
                     <div style={{display: 'flex', alignItems: 'flex-end'}}>
-                        <UpdateImage src='https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500'/>
+                        <UpdateImage src={product.img}/>
                         <Label htmlFor='file'>
                             <Publish/>
                         </Label>

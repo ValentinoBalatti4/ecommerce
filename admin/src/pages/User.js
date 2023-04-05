@@ -1,7 +1,8 @@
-import React from "react"
+import React, { useEffect, useState } from "react"
 import styled from "styled-components"
-import { Link } from "react-router-dom"
+import { Link, useLocation } from 'react-router-dom'
 import { PermIdentity, CalendarTodayOutlined, LocationSearchingOutlined, MailOutline, PhoneAndroidOutlined, Publish } from "@material-ui/icons"
+import { userRequest } from "../requests"
 
 const Container = styled.div`
     flex: 4;
@@ -171,6 +172,20 @@ const UploadBtn = styled.button`
 `
 
 const User = () => {
+    const location = useLocation()
+    const userId = location.pathname.split('/')[2]
+    const [user, setUser] = useState([])
+
+    useEffect(() => {
+        const getUser = async () => {
+            try{
+                const res = await userRequest.get(`user/find/${userId}`)
+                setUser(res.data)
+            } catch(e){console.log(e)}
+        }
+        getUser()
+    }, [userId])
+
     return(
         <Container>
             <Header>
@@ -182,9 +197,9 @@ const User = () => {
             <UserContainer>
                 <Left>
                     <LeftTop>
-                        <Image src="https://images.pexels.com/photos/1152994/pexels-photo-1152994.jpeg?auto=compress&cs=tinysrgb&dpr=2&w=500"/>
+                        <Image src={user.img || "https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png"}/>
                         <LeftTitle>
-                            <UserName>Jane Doe</UserName>
+                            <UserName>{user.username}</UserName>
                             <UserTitle>Software Engineer</UserTitle>
                         </LeftTitle>
                     </LeftTop>
@@ -205,12 +220,9 @@ const User = () => {
                         </UserInfoContainer>
                         <UserInfoContainer>
                             <MailOutline/>
-                            <UserInfo>Janedoe@test.com</UserInfo>
+                            <UserInfo>{user.email}</UserInfo>
                         </UserInfoContainer>
-                        <UserInfoContainer>
-                            <LocationSearchingOutlined/>
-                            <UserInfo>NY, EEUU</UserInfo>
-                        </UserInfoContainer>
+
                     </LeftBottom>
                 </Left>
                 <Right>

@@ -52,7 +52,7 @@ const Home = () => {
             } catch {}
         }
         getStats()
-        console.log(stats)
+
     }, [MONTHS])
 
     return(

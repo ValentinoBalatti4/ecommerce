@@ -62,24 +62,31 @@ const FeaturedInfo = () => {
         const getIncome = async () => {
             try{
                 const res = await userRequest.get('orders/income')
+                console.log("Respose: " + JSON.stringify(res.data))
                 setIncome(res.data)
-                console.log(res.data)
-                setPercentage((res.data[1].total*100) / res.data[0].total - 100)
+                setPercentage((res.data[1].total *  100) / res.data[0].total - 100)
             } catch (e){
                 console.log(e)
             }
         }
         getIncome()
-        
     }, [])
-    console.log(percentage  )
+
+    console.log("Income: " + JSON.stringify(income))
+
     return(
         <Container>
             <FeaturedItem>
                 <Title>Revenue</Title>
                 <MoneyContainer>
-                    <FeaturedMoney>$2,048.99</FeaturedMoney>
-                    <FeaturedMoneyRate>-10.4 <ArrowDown/></FeaturedMoneyRate>
+                    <FeaturedMoney>${income[1]?.total}</FeaturedMoney>
+                    <FeaturedMoneyRate>
+                        {Math.floor(percentage)}{" "}
+                        { percentage < 0 
+                            ? (<ArrowDown/>)
+                            : (<ArrowUp/>) 
+                        }
+                    </FeaturedMoneyRate>
                 </MoneyContainer>
                 <Subtitle>Compared to last month</Subtitle>
             </FeaturedItem>

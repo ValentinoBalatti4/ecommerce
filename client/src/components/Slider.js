@@ -44,7 +44,7 @@ const Slide = styled.div`
   height: 100vh;
   display: flex;
   align-items: center;
-  background-color: #${(props) => props.bg};
+  background: #${(props) => props.bg};
 `;
 
 const ImgContainer = styled.div`
@@ -98,7 +98,7 @@ const Slider = () => {
         {sliderItems.map((item) => (
           <Slide bg={item.bg} key={item.id}>
             <ImgContainer>
-              <Image src={require(`../${item.img}`)} />
+              <Image src="https://i.ibb.co/n3qjLv1/pngwing-com.png"/>
             </ImgContainer>
             <InfoContainer>
               <Title>{item.title}</Title>

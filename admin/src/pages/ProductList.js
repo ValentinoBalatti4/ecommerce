@@ -1,10 +1,10 @@
-import React, { useState } from "react"
+import React, { useEffect } from "react"
 import styled from "styled-components"
 import { DataGrid } from "@material-ui/data-grid"
 import { DeleteOutline } from "@material-ui/icons"
-import { productRows } from "../data"
 import {Link} from "react-router-dom"
-
+import { useDispatch, useSelector } from "react-redux"
+import  {getProducts, deleteProduct}  from "../redux/apiCalls"
   
 const Container = styled.div`
     flex: 4;
@@ -39,39 +39,37 @@ const DeleteBtn = styled(DeleteOutline)`
 `
 
 const ProductList = () => {
-    const [data, setData] = useState(productRows)
+    const dispatch = useDispatch()
+    const products = useSelector((state) => state.product.products)
+
+    useEffect(() => {
+        getProducts(dispatch)
+    }, [dispatch])
 
     const handleDelete = (id) => {
-        setData(data.filter(
-            (item) => item.id !== id
-        ))
+        deleteProduct(dispatch, id)
     }
 
-    
+
     const columns = [
-        { field: 'id', headerName: 'ID', width: 110 },
+        { field: '_id', headerName: 'ID', width: 220 },
         {
-          field: 'name',
+          field: 'product',
           headerName: 'Product',
-          width: 190,
+          width: 220,
           renderCell: (params) => {
             return(
                 <Product>
                     <Image src={params.row.img} alt=""/>
-                    {params.row.name}
+                    {params.row.title}
                 </Product>
             )
           }
         },
         {
-          field: 'stock',
+          field: 'inStock',
           headerName: 'Stock',
           width: 200,
-        },
-        {
-          field: 'status',
-          headerName: 'Status',
-          width: 140,
         },
         {
             field: 'price',
@@ -81,14 +79,14 @@ const ProductList = () => {
         {
             field: 'action',
             headerName: 'Action',
-            width: 160,
+            width: 200,
             renderCell: (params) => {
                 return(
                     <>
-                        <Link to={"/product/" + params.row.id}>
+                        <Link to={"/product/" + params.row._id}>
                             <EditBtn>Edit</EditBtn>
                         </Link>
-                        <DeleteBtn onClick={() => handleDelete(params.row.id)}/>
+                        <DeleteBtn onClick={() => handleDelete(params.row._id)}/>
                     </>
                 )
             }
@@ -100,7 +98,7 @@ const ProductList = () => {
 
     return(
         <Container>
-            <DataGrid rows={data} columns={columns} pageSize={8} disableSelectionOnClick checkboxSelection/>
+            <DataGrid rows={products} getRowId={(row) => row._id} columns={columns} pageSize={8} disableSelectionOnClick checkboxSelection/>
         </Container>
     )
 }

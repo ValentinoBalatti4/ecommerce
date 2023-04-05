@@ -1,21 +1,22 @@
 export const sliderItems = [
     {
       id: 1,
-      img: "images/slide1.png",
+      img: "https://ibb.co/W6wWzqq",
       title: "SUMMER SALE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
-      bg: "f5fafd",
+      bg: 'rgb(255,255,255)',
+      bg: 'radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(171,171,171,1) 40%, rgba(0,0,0,1) 100%)'
     },
     {
       id: 2,
-      img: "images/slide2.png",
+      img: "https://imgbin.com/png/k3HDCDhh/nike-sports-shoes-basketball-shoe-png",
       title: "AUTUMN COLLECTION",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fcf1ed",
     },
     {
       id: 3,
-      img: "images/slide3.png",
+      img: "https://imgbin.com/png/k3HDCDhh/nike-sports-shoes-basketball-shoe-png",
       title: "LOUNGEWEAR LOVE",
       desc: "DON'T COMPROMISE ON STYLE! GET FLAT 30% OFF FOR NEW ARRIVALS.",
       bg: "fbf0f4",
@@ -26,7 +27,7 @@ export const sliderItems = [
     {
       id: 1,
       img: "images/cat1.webp",
-      title: "SHIRT STYLE!",
+      title: "Men's Fashion",
       category: "fashion"
     },
     {
