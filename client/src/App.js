@@ -14,7 +14,13 @@ import { useSelector } from "react-redux";
 
 
 const App = () => {
-  const user = useSelector(state => state.user.currentUser)
+  const user = useSelector(state => {
+    if(state.user.currentUser !== null){
+      return true;
+    }
+    return false;
+  })
+
   return(
     <BrowserRouter>
       <Routes>
