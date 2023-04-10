@@ -1,4 +1,4 @@
-import { Search, ShoppingCartOutlined } from "@mui/icons-material";
+import { Search, ShoppingCartOutlined, FavoriteBorderOutlined } from "@mui/icons-material";
 import { Badge } from "@mui/material";
 import React from "react";
 import styled from "styled-components";
@@ -8,8 +8,8 @@ import { Link } from "react-router-dom";
 import { logout } from "../redux/apiCalls";
 import { useState } from "react";
 import { useEffect } from "react";
-import { userRequest } from "../requests";
-
+import { userRequest } from "../requests"; 
+import WishlistDropdown from "./WishlistDropdown";
 
 const Container = styled.div`
   position: fixed;
@@ -89,11 +89,14 @@ const MenuItem = styled.a`
 
 const Navbar = () => {
   const cartQuantity = useSelector(state => state.cart.quantity)
+  const wishlistQuantity = useSelector(state => state.wishlist.products.length)
   const dispatch = useDispatch()
   const user = useSelector(state => state.user.currentUser)
 
   const [query, setQuery] = useState("")
   const [searchResult, setSearchResult] = useState([])
+
+  const [WishlistIsOpen, setWishlistOpen] = useState(false)
 
   useEffect(() => {
     const getProduct = async () => {
@@ -141,6 +144,12 @@ const Navbar = () => {
             
           }
 
+          <MenuItem onClick={e => setWishlistOpen(!WishlistIsOpen)}>
+            <Badge badgeContent={wishlistQuantity}>
+              <FavoriteBorderOutlined />
+            </Badge>
+          </MenuItem>
+          
           <Link to="/cart">
             <MenuItem>
               <Badge badgeContent={cartQuantity}>
@@ -149,6 +158,11 @@ const Navbar = () => {
             </MenuItem>
           </Link>
         </Right>
+        {
+          WishlistIsOpen && (
+            <WishlistDropdown/>
+          )
+        }
       </Wrapper>
     </Container>
   );

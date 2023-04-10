@@ -6,7 +6,6 @@ import Announcement from "../components/Announcement";
 import Footer from "../components/Footer";
 import Navbar from "../components/Navbar";
 import { mobile, tablet } from "../responsive";
-import { useState } from "react";
 
 const Container = styled.div``;
 
@@ -19,6 +18,7 @@ const Title = styled.h1`
   display: flex;
   font-weight: 300;
   justify-content: center;
+  margin-top: 20px;
 `;
 
 const Top = styled.div`
@@ -67,7 +67,7 @@ const Product = styled.div`
   border: 1px solid gray;
   border-radius: 10px;
   
-  ${mobile({ flexDirection: "column" })}
+  ${mobile({ flexDirection: "column", position: "relative"})}
 `;
 
 const ProductDetail = styled.div`
@@ -128,9 +128,11 @@ const ProductAmount = styled.div`
 `;
 
 const ProductPrice = styled.div`
+  display: flex;
+  flex-direction: column;
   font-size: 30px;
   font-weight: 200;
-  ${mobile({ marginBottom: "20px" })}
+  ${mobile({ marginBottom: "20px" })} })}
 `;
 
 const Hr = styled.hr`
@@ -180,6 +182,7 @@ const DeleteButton = styled(DeleteOutline)`
   &:hover{
     color:red;
   }
+  ${mobile({display: 'inline-block', position: 'absolute', top: '10px', right: '10px' })}
 `
 
 const Cart = () => {
@@ -191,7 +194,7 @@ const Cart = () => {
       removeProduct(product)
     )
   }
-
+  
   return (
     <Container>
       <Announcement />
@@ -201,8 +204,9 @@ const Cart = () => {
         <Top>
           <TopButton>CONTINUE SHOPPING</TopButton>
           <TopTexts>
-            <TopText>Shopping Bag(2)</TopText>
-            <TopText>Your Wishlist (0)</TopText>
+            <TopText>
+              Your Wishlist (0)
+            </TopText>
           </TopTexts>
           <TopButton type="filled">CHECKOUT NOW</TopButton>
         </Top>
@@ -232,11 +236,18 @@ const Cart = () => {
                     </ProductDetail>
                     <PriceDetail>
                       <ProductAmountContainer>
-                        <Remove/>
-                        <ProductAmount>{product.quantity}</ProductAmount>
-                        <Add/>
+                        
+                        <ProductAmount>Quantity: {product.quantity}</ProductAmount>
+                        
                       </ProductAmountContainer>
-                      <ProductPrice>$ {product.price * product.quantity}</ProductPrice>
+                      <ProductPrice>
+                        <p style={{fontSize:'30px'}}>
+                          $ {product.price * product.quantity} 
+                        </p>
+                        {
+                          product.quantity > 1 && <p style={{marginLeft: '1rem'}}>$ ({product.price}x{product.quantity})</p>
+                        } 
+                      </ProductPrice>
                     </PriceDetail>
                     <DeleteButton onClick={() => deleteProduct(product)} />
                   </Product>

@@ -6,7 +6,6 @@ import Footer from "../components/Footer";
 import { mobile } from "../responsive";
 import { useState } from "react";
 import { useLocation } from "react-router-dom";
-import ClearIcon from '@mui/icons-material/Clear';
 
 
 const Container = styled.div``;
@@ -41,26 +40,31 @@ const Select = styled.select`
 `;
 const Option = styled.option``;
 
+
 const ProductList = () => {
   const location = useLocation()
   const cat = location.pathname.split("/")[2]
 
+  const [availableColors, setAvailableColors] = useState([])
+  const [availableSizes, setAvailableSizes] = useState([])
 
   const [filters, setFilter] = useState({})
   const [sort, setSort] = useState('newest')
 
-  const handleFilters = (e) =>{
+  const handleFilters = (e) => {
     const value = e.target.value
-    if(value === null){
-      delete filters[e.target.name]
+    const key = e.target.name
+    if(value === ""){
+      const newFilters = {...filters}
+      delete newFilters[key]
+      setFilter(newFilters)
+      e.target.selectedIndex = 0
     } else{
       setFilter({
         ...filters,
-        [e.target.name] : value.toLowerCase()
+        [e.target.name] : value.toUpperCase()
       })
     }
-    
-    console.log(filters)
   }
 
 
@@ -78,12 +82,11 @@ const ProductList = () => {
             <Option disabled selected>
               Color
             </Option>
-            <Option>White</Option>
-            <Option>Black</Option>
-            <Option>Red</Option>
-            <Option>Blue</Option>
-            <Option>Yellow</Option>
-            <Option>Green</Option>
+            {
+              availableColors.map(color => (
+                <Option key={color}>{color}</Option>
+              ))
+            }
             <Option></Option>
             
           </Select>
@@ -91,11 +94,7 @@ const ProductList = () => {
             <Option disabled selected>
               Size
             </Option>
-            <Option>XS</Option>
-            <Option>S</Option>
-            <Option>M</Option>
-            <Option>L</Option>
-            <Option>XL</Option>
+            {}
             <Option></Option>
           </Select>
           
@@ -107,7 +106,6 @@ const ProductList = () => {
             <Option value="asc">Price (asc)</Option>
             <Option value="desc">Price (desc)</Option>
           </Select>
-          <ClearIcon/>
         </Filter>
       </FilterContainer>
       <Products cat={cat} filters={filters} sort={sort}/>

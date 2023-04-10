@@ -6,17 +6,30 @@ import CategoryItem from "./CategoryItem";
 const Container = styled.div`
   display: flex;
   padding: 20px;
+  gap: 5px;
   justify-content: space-between;
-  ${mobile({ padding: "0px", flexDirection:"column" })}
-
+  flex-direction: column;
 `;
+
+const CategoriesContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  ${mobile({flexDirection: 'column'})}
+`
+
+const Title = styled.h2``
 
 const Categories = () => {
   return (
     <Container>
-      {categories.map((item) => (
-        <CategoryItem item={item} key={item.id} />
-      ))}
+      <div>
+        <Title>Categories</Title>
+      </div>
+      <CategoriesContainer>
+        {categories.map((item) => (
+          <CategoryItem item={item} key={item.id} />
+        ))}
+      </CategoriesContainer>
     </Container>
   );
 };

@@ -4,11 +4,18 @@ import { useState, useEffect } from "react";
 import axios from "axios"
 
 const Container = styled.div`
-    padding: 20px;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
 `;
+
+const ProductContainer = styled.div`
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+`
+
+const Title = styled.h2``
 
 const Products = ({cat, filters, sort}) => {
 
@@ -25,6 +32,13 @@ const Products = ({cat, filters, sort}) => {
             : `${BASE_URL}/products`,
         )
         setProducts(response.data)
+
+        // const colors = new Set(products.flatMap((p) => p.color));
+        // setAvailableColors(Array.from(colors));
+
+        // const sizes = new Set(products.flatMap((p) => p.size));
+        // setAvailableSizes(Array.from(sizes));
+
       } catch(e){
         console.log(e.message)
       }
@@ -60,15 +74,18 @@ const Products = ({cat, filters, sort}) => {
   }, [sort])
 
   return (
-    <Container>
-      { cat 
-          ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
-          : products
-          // Always display different random products (8)
-            .sort(() => 0.5 - Math.random())
-            .slice(0, 8)
-            .map((item) => <Product item={item} key={item._id} />)
-      } 
+    <Container> 
+      <Title>Some of our Products</Title>
+      <ProductContainer>
+        { cat 
+            ? filteredProducts.map((item) => <Product item={item} key={item._id} />)
+            : products
+            // Always display different random products (8)
+              .sort(() => 0.5 - Math.random())
+              .slice(0, 8)
+              .map((item) => <Product item={item} key={item._id} />)
+        } 
+      </ProductContainer>
     </Container>
   );
 };

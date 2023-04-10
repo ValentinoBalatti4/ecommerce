@@ -41,8 +41,8 @@ export const sliderItems = [
     {
       id: 3,
       img: "https://i.ibb.co/LJtBQBf/casual-dress-code-men-street-style-luxe-digital-1.jpg",
-      title: "Casual Ocations",
-      category: ""
+      title: "Winter wardrobe",
+      category: "winter"
     },
   ];
 

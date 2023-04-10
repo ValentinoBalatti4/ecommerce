@@ -5,7 +5,9 @@ import {
 } from "@mui/icons-material";
 import styled from "styled-components";
 import { Link } from 'react-router-dom'
-
+import { useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
+import { addProduct } from "../redux/wishlistRedux";
 
 const Info = styled.div`
   opacity: 0;
@@ -72,7 +74,16 @@ const Icon = styled.div`
 `;
 
 const Product = ({ item }) => {
- 
+  const dispatch = useDispatch()
+  const wishlist = useSelector(state => state.wishlist)
+
+  const addToWishlist = (item) => {
+    if(wishlist.products.includes(item)){
+      alert("This item is already in your wishlist")
+    }else{
+      dispatch(addProduct(item))
+    }
+  } 
 
   return (
     <Container>
@@ -88,7 +99,7 @@ const Product = ({ item }) => {
           </Link>
         </Icon>
         <Icon>
-          <FavoriteBorderOutlined />
+          <FavoriteBorderOutlined onClick={e => addToWishlist(item)}/>
         </Icon>
       </Info>
     </Container>

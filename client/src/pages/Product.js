@@ -133,18 +133,18 @@ const Button = styled.button`
   }
 
   ${mobile({ width: "100%" })}
-
-
 `;
 
 const Product = () => {
   const location = useLocation()
   const id = location.pathname.split('/')[2]
 
+  const [error, setError] = useState("")
   const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1)
   const [color, setColor] = useState("")
   const [size, setSize] = useState("")
+  
   const dispatch = useDispatch()
 
   useEffect(()=>{
@@ -166,10 +166,13 @@ const Product = () => {
   }
 
   const handleClick = () => {
-    console.log(product)
-    dispatch(
-      addProduct({ ...product, quantity, color, size })
-    )
+    if(color === "" || size === ""){
+      setError("You must set the color and size!")
+    }else{
+      dispatch(
+        addProduct({ ...product, quantity, color, size })
+      )
+    }
   }
 
   return (
@@ -196,13 +199,14 @@ const Product = () => {
             <Filter>
               <FilterTitle>Size</FilterTitle>
               <FilterSize onChange={(e) => setSize(e.target.value)}>
-                <FilterSizeOption>Select</FilterSizeOption>
+                <FilterSizeOption value=''>Select</FilterSizeOption>
                 {product.size?.map((s) =>(
                   <FilterSizeOption key={s}>{s}</FilterSizeOption>
                 ))}
               </FilterSize>
             </Filter>
           </FilterContainer>
+          {error}
           <AddContainer>
             <AmountContainer>
               <Remove onClick={() => handleQuantity("dec")}/>
