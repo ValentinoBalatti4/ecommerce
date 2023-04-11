@@ -135,16 +135,9 @@ const ProductAmount = styled.div`
 
 const ProductPrice = styled.div`
   display: flex;
-  flex-direction: column;
   font-size: 30px;
   font-weight: 200;
   ${mobile({ marginBottom: "20px" })} })}
-`;
-
-const Hr = styled.hr`
-  background-color: #eee;
-  border: none;
-  height: 10px;
 `;
 
 const Summary = styled.div`
@@ -254,7 +247,7 @@ const Cart = () => {
                           $ {product.price * product.quantity} 
                         </p>
                         {
-                          product.quantity > 1 && <p style={{marginLeft: '1rem'}}>$ ({product.price}x{product.quantity})</p>
+                          product.quantity > 1 && <p> (${product.price}x{product.quantity})</p>
                         } 
                       </ProductPrice>
                     </PriceDetail>

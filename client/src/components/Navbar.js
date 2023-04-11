@@ -98,6 +98,7 @@ const ResultsContainer = styled.div`
   border: 1px solid lightgray;
   border-radius: 0 0 15px;  
   box-shadow: 0.1rem 0.2rem 0.2rem grey;
+  ${mobile({ width: '100%' })}
 `
 
 const Result = styled.div`

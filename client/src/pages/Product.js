@@ -8,7 +8,7 @@ import { mobile } from "../responsive";
 import { useLocation } from "react-router-dom";
 import { useEffect, useState } from "react";
 import { addProduct } from "../redux/cartRedux";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { api } from "../requests";
 import Loader from '../components/Loader';
 
@@ -149,6 +149,9 @@ const Product = () => {
   const location = useLocation()
   const id = location.pathname.split('/')[2]
 
+  const productsInCart = useSelector(state => state.cart.products)
+  console.log(productsInCart)
+
   const [status, setStatus] = useState("")
   const [message, setMessage] = useState("")
   
@@ -186,11 +189,17 @@ const Product = () => {
       setStatus('error')
       setMessage("You must set the color and size!")
     }else{
-      dispatch(
-        addProduct({ ...product, quantity, color, size })
-      )
-      setStatus('success')
-      setMessage("Product added successfully")
+
+      if(productsInCart.find(p => product._id === p._id)){
+        setStatus('error')
+        setMessage("You already have this element in your cart!")
+      }else{
+        dispatch(
+          addProduct({ ...product, quantity, color, size })
+        )
+        setStatus('success')
+        setMessage("Product added successfully")
+      }
     }
   }
 
