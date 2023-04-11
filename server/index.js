@@ -10,17 +10,11 @@ const userRouter = require('./routes/user')
 const productRouter = require('./routes/product')
 const cartRouter = require('./routes/cart')
 const orderRouter = require('./routes/order')
-const stripeRouter = require('./routes/stripe')
+
 
 const app = express();
-  
-const corsConfig = {
-    origin: 'https://ecommerce-rho-roan.vercel.app/',
-    credentials: true,
-    optionSuccessStatus: 200
-}
 
-app.use(cors(corsConfig))
+app.use(cors())
 app.use(express.json())
 
 
