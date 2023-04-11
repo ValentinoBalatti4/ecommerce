@@ -212,7 +212,9 @@ const Navbar = () => {
                 : searchResult.map(item => (
                   <Result>
                     <ResultImage src={item.img}/>
-                    <ResultTitle>{item.title}</ResultTitle>
+                    <Link to={`/products/${item._id}`}>
+                      <ResultTitle>{item.title}</ResultTitle>
+                    </Link>
                   </Result>
               ))}
             </ResultsContainer>
