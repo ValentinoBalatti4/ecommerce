@@ -14,7 +14,13 @@ const stripeRouter = require('./routes/stripe')
 
 const app = express();
   
-app.use(cors())
+const corsConfig = {
+    origin: 'http://127.0.0.1:4444',
+    credentials: true,
+    optionSuccessStatus: 200
+}
+
+app.use(cors(corsConfig))
 app.use(express.json())
 
 
