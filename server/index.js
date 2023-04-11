@@ -33,7 +33,6 @@ app.use("/api/user", userRouter)
 app.use("/api/products", productRouter)
 app.use("/api/carts", cartRouter)
 app.use("/api/orders", orderRouter)
-app.use("/api/checkout", stripeRouter)
 
 
 app.listen(4444, () => {
