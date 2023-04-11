@@ -62,7 +62,7 @@ const ProductList = () => {
     } else{
       setFilter({
         ...filters,
-        [e.target.name] : value.toUpperCase()
+        [e.target.name] : value.toLowerCase()
       })
     }
   }
@@ -94,7 +94,11 @@ const ProductList = () => {
             <Option disabled selected>
               Size
             </Option>
-            {}
+            {
+              availableSizes.map(size => (
+                <Option key={size}>{size}</Option>
+              ))
+            }
             <Option></Option>
           </Select>
           
@@ -108,7 +112,7 @@ const ProductList = () => {
           </Select>
         </Filter>
       </FilterContainer>
-      <Products cat={cat} filters={filters} sort={sort}/>
+      <Products cat={cat} filters={filters} sort={sort} setAvailableColors={setAvailableColors} setAvailableSizes={setAvailableSizes}/>
       <Footer />
     </Container>
   );

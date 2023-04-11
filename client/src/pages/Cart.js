@@ -98,9 +98,15 @@ const ProductId = styled.span`
   ${mobile({fontSize: "11px"})}
 `;
 
+const ColorItem = styled.div`
+  display: flex;
+  gap: 5px;
+`
+
 const ProductColor = styled.div`
   width: 20px;
   height: 20px;
+  border: 1px solid lightgray;
   border-radius: 50%;
   background-color: ${(props) => props.color};
 `;
@@ -228,7 +234,10 @@ const Cart = () => {
                         <ProductId>
                           <b>ID:</b> {product._id}
                         </ProductId>
-                        <ProductColor color={product.color}/>
+                        <ColorItem>
+                          <b>Color: </b>
+                          <ProductColor color={product.color}/>
+                        </ColorItem>
                         <ProductSize>
                           <b>Size:</b> {product.size}
                         </ProductSize>

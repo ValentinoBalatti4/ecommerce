@@ -3,12 +3,14 @@ import { useDispatch, useSelector } from 'react-redux'
 import styled from 'styled-components'
 import {removeProduct} from '../redux/wishlistRedux'
 import { DeleteOutline } from "@mui/icons-material"
+import { Link } from 'react-router-dom'
 import { mobile } from '../responsive'
 
 
 const Container = styled.div`}
   display: flex;
   flex-direction: column;
+  max-height: 50vh;
   background-color: whitesmoke;
   padding: 10px;
   gap: 10px;  
@@ -17,24 +19,29 @@ const Container = styled.div`}
   right: 0;
   box-shadow: 1px 3px 3px grey;
   z-index: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
   border: 1px solid gray;
-  border-radius: 0 0 0 10px
+  border-radius: 0 0 0 10px;
+  ${mobile({width: '100vw'})}
 `
 
-const Text = styled.span``
+const Text = styled.span`
+${mobile({padding: '0 20px'})}
+`
 
 const ProductContainer = styled.div`
   background-color: #fafafa ;
   display: flex;
-  gap: 30px;
+  gap: 50px;
   justify-content: space-between;
   border-radius: 10px;
+  ${mobile({margin: '0 25px'})}
 `
 
 const Left = styled.div`
   display: flex;
   align-items: center;
+  gap: 10px;
 `
 const Right = styled.div`
   display: flex;
@@ -82,7 +89,9 @@ const WishlistDropdown = () => {
             <ProductContainer key={product._id}>
               <Left>
                 <ProductImage src={product.img} alt="Product image"/>
-                <ProductTitle>{product.title}</ProductTitle>
+                <Link style={{color: "black", textDecoration: 'none'}} to={`/product/${product._id}`}>
+                  <ProductTitle>{product.title}</ProductTitle>
+                </Link>
               </Left>
               <Right>
                 <DeleteButton onClick={() => deleteProduct(product)}/>

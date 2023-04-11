@@ -87,6 +87,46 @@ const MenuItem = styled.a`
   ${mobile({ fontSize: "12px", marginLeft: "10px" })}
 `;
 
+const ResultsContainer = styled.div`
+  background-color: whitesmoke;
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  padding: 5px 10px;
+  border: 1px solid lightgray;
+  border-radius: 0 0 15px;  
+  box-shadow: 0.1rem 0.2rem 0.2rem grey;
+`
+
+const Result = styled.div`
+  display: flex;
+  align-items:center;
+  padding: 10px 15px;
+  gap: 20px;
+  border-bottom: 1px solid lightgray;
+
+  &:hover{
+    background-color: rgb(240,240,255)
+  }
+
+`
+
+const ResultImage = styled.img`
+  height: 50px;
+  width: 50px;
+  border-radius: 40px;
+  object-fit: contain;
+  border: 1px solid lightgray;
+`
+
+const ResultTitle = styled.span`
+  font-size: 20px;  
+  font-weight: 500;
+`
+
+
 const Navbar = () => {
   const cartQuantity = useSelector(state => state.cart.quantity)
   const wishlistQuantity = useSelector(state => state.wishlist.products.length)
@@ -161,6 +201,21 @@ const Navbar = () => {
         {
           WishlistIsOpen && (
             <WishlistDropdown/>
+          )
+        }
+        {
+          query.length > 0 && (
+            <ResultsContainer>
+              {
+                searchResult.length === 0
+                ? <Result>No items found</Result>
+                : searchResult.map(item => (
+                  <Result>
+                    <ResultImage src={item.img}/>
+                    <ResultTitle>{item.title}</ResultTitle>
+                  </Result>
+              ))}
+            </ResultsContainer>
           )
         }
       </Wrapper>

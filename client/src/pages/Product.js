@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { addProduct } from "../redux/cartRedux";
 import { useDispatch } from "react-redux";
 import { api } from "../requests";
+import Loader from '../components/Loader';
 
 const Container = styled.div``;
 
@@ -21,6 +22,9 @@ const Wrapper = styled.div`
 
 const ImgContainer = styled.div`
   flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 `;
 
 const Image = styled.img`
@@ -135,23 +139,35 @@ const Button = styled.button`
   ${mobile({ width: "100%" })}
 `;
 
+const Span = styled.span`
+  font-size: 18px;
+  color: ${(props) => props.type === 'error' ? 'red' : 'green'};
+`
+
+
 const Product = () => {
   const location = useLocation()
   const id = location.pathname.split('/')[2]
 
-  const [error, setError] = useState("")
+  const [status, setStatus] = useState("")
+  const [message, setMessage] = useState("")
+  
   const [product, setProduct] = useState({})
   const [quantity, setQuantity] = useState(1)
   const [color, setColor] = useState("")
   const [size, setSize] = useState("")
   
+  const [isLoading, setIsLoading] = useState(false)
+
   const dispatch = useDispatch()
 
   useEffect(()=>{
     const getProduct = async () => {
+      setIsLoading(true)
       try{
         const response = await api.get(`products/find/${id}`)
         setProduct(response.data)
+        setIsLoading(false)
       } catch(e){}
     }
     getProduct()
@@ -167,11 +183,14 @@ const Product = () => {
 
   const handleClick = () => {
     if(color === "" || size === ""){
-      setError("You must set the color and size!")
+      setStatus('error')
+      setMessage("You must set the color and size!")
     }else{
       dispatch(
         addProduct({ ...product, quantity, color, size })
       )
+      setStatus('success')
+      setMessage("Product added successfully")
     }
   }
 
@@ -181,7 +200,11 @@ const Product = () => {
       <Navbar />
       <Wrapper>
         <ImgContainer>
-          <Image src={product.img} />
+          {
+            isLoading === true 
+              ? <Loader/>
+              : <Image src={product.img} />
+          }
         </ImgContainer>
         <InfoContainer>
           <Title>{product.title}</Title>
@@ -206,7 +229,6 @@ const Product = () => {
               </FilterSize>
             </Filter>
           </FilterContainer>
-          {error}
           <AddContainer>
             <AmountContainer>
               <Remove onClick={() => handleQuantity("dec")}/>
@@ -215,6 +237,11 @@ const Product = () => {
             </AmountContainer>
             <Button onClick={handleClick}>ADD TO CART</Button>
           </AddContainer>
+          {
+            status !== "" && (
+              <Span type={status}>{message}</Span>
+            )}
+
         </InfoContainer>
       </Wrapper>
       <Newsletter />
