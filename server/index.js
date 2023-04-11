@@ -15,7 +15,7 @@ const stripeRouter = require('./routes/stripe')
 const app = express();
   
 const corsConfig = {
-    origin: 'http://127.0.0.1:4444',
+    origin: 'https://ecommerce-rho-roan.vercel.app/',
     credentials: true,
     optionSuccessStatus: 200
 }
